@@ -22,14 +22,17 @@
   become_user: "{{ vimmer_user.name }}"
 
 - name: Install python
-  command: '{{ zsh_path.stdout }} -lc "pyenv install {{ item }}"'
+  shell: |-
+    if [ ! -d "{{ home_dir }}/.pyenv/versions/{{ item }}" ]; then
+      {{ zsh_path.stdout }} -lc "pyenv install {{ item }}"
+    fi
   become: true
   become_user: "{{ vimmer_user.name }}"
   with_items:
     "{{ pyenv_versions }}"
 
-- name: Set pyenv global as "{{ pyenv_versions[0] }}"
-  command: '{{ zsh_path.stdout }} -lc "pyenv global {{ pyenv_versions[0] }}"'
+- name: Set pyenv global as "{{ pyenv_versions }}"
+  command: '{{ zsh_path.stdout }} -lc "pyenv global {{ pyenv_versions | join(" ") }}"'
   become: true
   become_user: "{{ vimmer_user.name }}"
 
