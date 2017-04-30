@@ -1,0 +1,39 @@
+---
+- name: Check pt is exists
+  stat:
+    path: "{{ home_dir }}/bin/pt"
+  register: p
+
+- block:
+  - name: ~/bin exists
+    file:
+      path: "{{ home_dir }}/bin"
+      state: directory
+      owner: "{{ vimmer_user.name }}"
+      group: "{{ vimmer_user.group }}"
+
+  - name: download pt binary
+    get_url:
+      url: "https://github.com/monochromegane/the_platinum_searcher/releases/download/v2.1.5/pt_linux_amd64.tar.gz"
+      dest: "{{ home_dir }}/bin/pt_linux_amd64.tar.gz"
+      owner: "{{ vimmer_user.name }}"
+      group: "{{ vimmer_user.group }}"
+
+  - name: pt installed
+    command: "{{ item }}"
+    args:
+      chdir: "{{ home_dir }}/bin"
+    with_items:
+      - tar xzf pt_linux_amd64.tar.gz
+      - mv pt_linux_amd64/pt ./
+    become: true
+    become_user: "{{ vimmer_user.name }}"
+
+  - name: cleanup pt installer
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ home_dir }}/bin/pt_linux_amd64.tar.gz"
+      - "{{ home_dir }}/bin/pt_linux_amd64/"
+  when: not p.stat.exists

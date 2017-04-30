@@ -5,13 +5,19 @@ vimmer_user:
   group: vimmer
   password: $1$o.ZWGgEe$fe6fBFqh3vIm6TlLsMkjD/  # vimmer
 home_dir         : "/home/{{ vimmer_user.name }}"
+config_dir       : "{{ home_dir }}/.config"
 dotfiles_path    : "{{ home_dir }}/dotfiles"
-nvim_config_path : "{{ home_dir }}/.config/nvim"
+nvim_config_path : "{{ config_dir }}/nvim"
+pt_config_path   : "{{ config_dir }}/pt"
+config_paths:
+  - "{{ nvim_config_path }}"
+  - "{{ pt_config_path }}"
 symlink_items:
   - { src: "{{ dotfiles_path }}/zsh/.zshenv",          dest : "{{ home_dir }}/.zshenv" }
   - { src: "{{ dotfiles_path }}/zsh/.zshrc",           dest : "{{ home_dir }}/.zshrc" }
   - { src: "{{ dotfiles_path }}/.vim",                 dest : "{{ home_dir }}/.vim" }
   - { src: "{{ dotfiles_path }}/.vim/rc/.vimrc",       dest : "{{ nvim_config_path }}/init.vim" }
   - { src: "{{ dotfiles_path }}/.vim/nerdtree_plugin", dest : "{{ nvim_config_path }}/nerdtree_plugin" }
+  - { src: "{{ dotfiles_path }}/pt/config.toml",       dest : "{{ pt_config_path }}/config.toml" }
 peco_version   : 'v0.5.1'
 pyenv_versions : ['3.6.1']
