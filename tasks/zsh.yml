@@ -1,0 +1,9 @@
+---
+- name: zsh installed
+  apt:
+    name: zsh
+- name: keep zsh path
+  command: which zsh
+  register: zsh_path
+- name: use zsh as login shell
+  command: usermod -s {{ zsh_path.stdout }} {{ vimmer_user.name }}

@@ -1,0 +1,8 @@
+---
+- name: vimmer group exists
+  group:
+    name: "{{ vimmer_user.group }}"
+- name: vimmer user exists
+  user:
+    name: "{{ vimmer_user.name }}"
+    password: "{{ vimmer_user.password }}"

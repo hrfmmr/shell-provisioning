@@ -1,0 +1,10 @@
+---
+- name: apt cache updated
+  apt:
+    update_cache: yes
+- include: user.yml
+- include: dotfiles.yml
+- include: zsh.yml
+- include: peco.yml
+- include: pyenv.yml
+- include: neovim.yml

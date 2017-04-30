@@ -1,0 +1,41 @@
+---
+- name: Install requirements for building python
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - make
+    - build-essential
+    - libssl-dev
+    - zlib1g-dev
+    - libbz2-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - wget
+    - curl
+    - llvm
+
+- name: Install pyenv
+  git:
+    repo: https://github.com/yyuu/pyenv.git
+    dest: "{{ home_dir }}/.pyenv"
+  become: true
+  become_user: "{{ vimmer_user.name }}"
+
+- name: Install python
+  command: '{{ zsh_path.stdout }} -lc "pyenv install {{ item }}"'
+  become: true
+  become_user: "{{ vimmer_user.name }}"
+  with_items:
+    "{{ pyenv_versions }}"
+
+- name: Set pyenv global as "{{ pyenv_versions[0] }}"
+  command: '{{ zsh_path.stdout }} -lc "pyenv global {{ pyenv_versions[0] }}"'
+  become: true
+  become_user: "{{ vimmer_user.name }}"
+
+- name: Install neovim plugin
+  command: "{{ home_dir }}/.pyenv/versions/{{ item }}/bin/pip install neovim"
+  become: true
+  become_user: "{{ vimmer_user.name }}"
+  with_items:
+    "{{ pyenv_versions }}"
