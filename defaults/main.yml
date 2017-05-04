@@ -19,5 +19,4 @@ symlink_items:
   - { src: "{{ dotfiles_path }}/.vim/rc/.vimrc",       dest : "{{ nvim_config_path }}/init.vim" }
   - { src: "{{ dotfiles_path }}/.vim/nerdtree_plugin", dest : "{{ nvim_config_path }}/nerdtree_plugin" }
   - { src: "{{ dotfiles_path }}/pt/config.toml",       dest : "{{ pt_config_path }}/config.toml" }
-peco_version   : 'v0.5.1'
 pyenv_versions : ['3.6.1']

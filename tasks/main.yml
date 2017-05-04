@@ -5,7 +5,7 @@
 - include: user.yml
 - include: dotfiles.yml
 - include: zsh.yml
-- include: peco.yml
+- include: fzf.yml
 - include: pt.yml
 - include: pyenv.yml
 - include: neovim.yml

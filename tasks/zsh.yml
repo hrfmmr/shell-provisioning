@@ -7,3 +7,7 @@
   register: zsh_path
 - name: use zsh as login shell
   command: usermod -s {{ zsh_path.stdout }} {{ vimmer_user.name }}
+- name: PATH configured
+  command: '{{ zsh_path.stdout }} -lc "source ~/.zshenv"'
+  become: true
+  become_user: "{{ vimmer_user.name }}"
