@@ -22,6 +22,7 @@
     user:
       name: "{{ vimmer_user.name }}"
       password: "{{ vimmer_user.password }}"
+      group: "{{ vimmer_user.group }}"
     when: should_create.changed
   tags:
     - user
