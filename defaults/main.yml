@@ -1,7 +1,6 @@
 ---
 vimmer_user:
   name: vimmer
-  uid: 1040
   group: vimmer
   password: $1$o.ZWGgEe$fe6fBFqh3vIm6TlLsMkjD/  # vimmer
 home_dir         : "/home/{{ vimmer_user.name }}"

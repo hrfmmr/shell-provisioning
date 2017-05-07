@@ -1,8 +1,27 @@
 ---
-- name: vimmer group exists
-  group:
-    name: "{{ vimmer_user.group }}"
-- name: vimmer user exists
-  user:
-    name: "{{ vimmer_user.name }}"
-    password: "{{ vimmer_user.password }}"
+- block:
+  - command: 'getent group "{{ vimmer_user.group }}"'
+    register: should_create
+    failed_when: false
+    changed_when: should_create.rc == 2
+
+  - name: User / vimmer group exists
+    group:
+      name: "{{ vimmer_user.group }}"
+    when: should_create.changed
+  tags:
+    - group
+
+- block:
+  - command: 'getent passwd "{{ vimmer_user.name }}"'
+    register: should_create
+    failed_when: false
+    changed_when: should_create.rc == 2
+
+  - name: User / vimmer user exists
+    user:
+      name: "{{ vimmer_user.name }}"
+      password: "{{ vimmer_user.password }}"
+    when: should_create.changed
+  tags:
+    - user
