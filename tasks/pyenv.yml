@@ -2,6 +2,7 @@
 - name: Install requirements for building python
   apt:
     name: "{{ item }}"
+    update_cache: true
   with_items:
     - make
     - build-essential
@@ -13,6 +14,10 @@
     - wget
     - curl
     - llvm
+    - libncurses5-dev
+    - libncursesw5-dev
+    - xz-utils
+    - tk-dev
 
 - name: Install pyenv
   git:
