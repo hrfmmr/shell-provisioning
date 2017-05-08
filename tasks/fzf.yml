@@ -1,4 +1,5 @@
 ---
+- include: go.yml
 - name: Install fzf
   command: go get -u github.com/junegunn/fzf/src/fzf
   environment:
